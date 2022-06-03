@@ -1,15 +1,19 @@
-const express = require('express');
+const http = require('http');
 
-const userRouter = require('./routers/user');
-const taskRouter = require('./routers/task');
+require('dotenv').config();
+const { mongoConnect } = require('./db/mongo');
+const app = require('./app');
 
-const app = express();
-const port = process.env.PORT;
+const PORT = process.env.PORT;
 
-app.use(express.json());
-app.use(userRouter);
-app.use(taskRouter);
+const server = http.createServer(app);
 
-app.listen(port, () => {
-  console.log('Server is up on port ' + port);
-});
+async function startServer() {
+  await mongoConnect();
+
+  server.listen(PORT, () => {
+    console.log('Server is up on port ' + PORT);
+  });
+}
+
+startServer();

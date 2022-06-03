@@ -1,10 +1,9 @@
 const express = require('express');
 const router = new express.Router();
 
-require('../db/mongoose');
+require('../db/mongo');
 const Task = require('../models/task');
 const auth = require('../middleware/auth');
-const { CommandStartedEvent } = require('mongoose/node_modules/mongodb');
 
 router.post('/tasks', auth, async (req, res) => {
   const task = new Task({

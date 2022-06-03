@@ -1,0 +1,29 @@
+name: Task Manager CI
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+jobs:
+  build:
+    env:
+      CI: true
+      PORT: 3000
+      MONGO_URL: mongodb://localhost/task
+    strategy:
+      matrix:
+        node-version: [17.x]
+        mongodb-version: ['5.0']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js version ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: MongoDB in GitHub Actions
+        uses: supercharge/mongodb-github-action@1.7.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+      - run: npm install
+      - run: npm test
