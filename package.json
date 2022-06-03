@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest --watch --runInBand",
+    "test": "jest --runInBand",
     "start": "node src/server.js",
     "dev": "nodemon --inspect src/server.js"
   },
